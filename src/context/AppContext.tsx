@@ -209,9 +209,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       .then((customItems: ContentItem[]) => {
         if (Array.isArray(customItems) && customItems.length > 0) {
           setCatalog(prev => {
+            const customMap = new Map(customItems.map(item => [item.id, item]));
+            // Update existing items with fresh server data (e.g. .mp4 URLs)
+            const updated = prev.map(item => {
+              const serverItem = customMap.get(item.id);
+              if (serverItem) return serverItem;
+              // Clean any stale .mkv reference to .mp4
+              if (item.streamManifestUrl?.includes('.mkv')) {
+                return {
+                  ...item,
+                  streamManifestUrl: item.streamManifestUrl.replace(/\.mkv$/i, '.mp4')
+                };
+              }
+              return item;
+            });
+            // Append any brand new items
             const existingIds = new Set(prev.map(c => c.id));
             const newItems = customItems.filter(item => !existingIds.has(item.id));
-            return newItems.length > 0 ? [...newItems, ...prev] : prev;
+            const merged = [...newItems, ...updated];
+            localStorage.setItem('streamhub_catalog', JSON.stringify(merged));
+            return merged;
           });
         }
       })

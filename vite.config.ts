@@ -159,6 +159,29 @@ function streamhubBackendPlugin(): Plugin {
 
             req.pipe(writeStream);
             writeStream.on('finish', () => {
+              const ext = path.extname(safeName).toLowerCase();
+              if (ext === '.mkv') {
+                const mp4Name = safeName.replace(/\.mkv$/i, '.mp4');
+                const mp4Path = path.resolve(uploadsDir, mp4Name);
+                try {
+                  const { execSync } = require('child_process');
+                  const ffmpegPath = require('ffmpeg-static');
+                  if (ffmpegPath && fs.existsSync(ffmpegPath)) {
+                    execSync(`"${ffmpegPath}" -y -i "${targetPath}" -c copy -movflags +faststart "${mp4Path}"`, { stdio: 'ignore' });
+                    try { fs.unlinkSync(targetPath); } catch {}
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify({ 
+                      success: true, 
+                      url: `/uploads/${mp4Name}`, 
+                      filename: mp4Name 
+                    }));
+                    return;
+                  }
+                } catch (remuxErr) {
+                  console.error('Auto-remux warning:', remuxErr);
+                }
+              }
+
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ 
                 success: true, 

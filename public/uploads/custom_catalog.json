@@ -10,37 +10,38 @@
     "rating": 8.8,
     "ageRating": "U/A 13+",
     "genres": [
-      "Comedy",
+      "Action",
+      "Mythology",
       "Entertainment"
     ],
     "cast": [
       "Home Collection"
     ],
     "director": "Personal Upload",
-    "posterUrl": "",
+    "posterUrl": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500&auto=format&fit=crop&q=80",
     "backdropUrl": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=1600&auto=format&fit=crop&q=80",
     "bucket": "owned",
     "entitlementTier": "free",
-    "streamManifestUrl": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv",
+    "streamManifestUrl": "/uploads/Hanuman_Ansh_2026_1080p.mp4",
     "renditions": [
       {
         "quality": "1080p",
         "resolution": "1920x1080",
         "bitrate": "5.0 Mbps",
-        "url": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv"
+        "url": "/uploads/Hanuman_Ansh_2026_1080p.mp4"
       },
       {
         "quality": "720p",
         "resolution": "1280x720",
         "bitrate": "2.5 Mbps",
-        "url": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv"
+        "url": "/uploads/Hanuman_Ansh_2026_1080p.mp4"
       }
     ],
     "audioTracks": [
       {
         "id": "orig",
-        "label": "Original Audio",
-        "language": "en",
+        "label": "Hindi (Original)",
+        "language": "hi",
         "isDefault": true
       }
     ],
@@ -75,13 +76,13 @@
     "bucket": "owned",
     "entitlementTier": "free",
     "featured": true,
-    "streamManifestUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv",
+    "streamManifestUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4",
     "renditions": [
       {
         "quality": "720p",
         "resolution": "1280x720",
         "bitrate": "2.5 Mbps",
-        "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv"
+        "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4"
       }
     ],
     "audioTracks": [
@@ -106,13 +107,13 @@
             "synopsis": "Kapil Sharma, Sunil Grover, and the cast return with celebrity guests and non-stop laughter.",
             "duration": 3600,
             "thumbnailUrl": "https://images.unsplash.com/photo-1514306191717-452ec28c7814?w=500&auto=format&fit=crop&q=80",
-            "streamUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv",
+            "streamUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4",
             "renditions": [
               {
                 "quality": "720p",
                 "resolution": "1280x720",
                 "bitrate": "2.5 Mbps",
-                "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv"
+                "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4"
               }
             ]
           }

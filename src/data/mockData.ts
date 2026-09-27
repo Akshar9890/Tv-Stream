@@ -87,13 +87,13 @@ export const INITIAL_CONTENT: ContentItem[] = [
     bucket: 'owned',
     entitlementTier: 'free',
     featured: true,
-    streamManifestUrl: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv',
+    streamManifestUrl: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4',
     renditions: [
       {
         quality: '720p',
         resolution: '1280x720',
         bitrate: '2.5 Mbps',
-        url: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv'
+        url: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4'
       }
     ],
     audioTracks: [
@@ -118,13 +118,13 @@ export const INITIAL_CONTENT: ContentItem[] = [
             synopsis: 'Kapil Sharma, Sunil Grover, and the cast return with celebrity guests and non-stop laughter.',
             duration: 3600,
             thumbnailUrl: 'https://images.unsplash.com/photo-1514306191717-452ec28c7814?w=500&auto=format&fit=crop&q=80',
-            streamUrl: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv',
+            streamUrl: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4',
             renditions: [
               {
                 quality: '720p',
                 resolution: '1280x720',
                 bitrate: '2.5 Mbps',
-                url: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv'
+                url: '/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p.mp4'
               }
             ]
           }
