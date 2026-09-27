@@ -16,7 +16,10 @@ import {
   ArrowLeft,
   Download,
   Check,
-  Loader2
+  Loader2,
+  ExternalLink,
+  AlertTriangle,
+  Tv
 } from 'lucide-react';
 import { ContentItem } from '../../types';
 import { useApp } from '../../context/AppContext';
@@ -91,6 +94,22 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ content, episodeId, on
     .find(e => e.id === episodeId);
 
   const streamSrc = activeEpisode?.streamUrl || content.streamManifestUrl;
+  const [playbackError, setPlaybackError] = useState<string | null>(null);
+
+  const fullStreamUrl = typeof window !== 'undefined'
+    ? (streamSrc.startsWith('http') ? streamSrc : `${window.location.origin}${streamSrc}`)
+    : streamSrc;
+  const vlcUrl = `vlc://${fullStreamUrl.replace(/^https?:\/\//, '')}`;
+
+  const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    const err = e.currentTarget.error;
+    let detail = 'The browser cannot decode or play this video container (MKV).';
+    if (err?.code === 4) {
+      detail = 'This movie is in an MKV container. iPhones, iPads, and some Smart TVs cannot play MKV files inside web browsers.';
+    }
+    setPlaybackError(detail);
+    setIsBuffering(false);
+  };
 
   // Auto-hide controls timer
   const resetHideTimer = useCallback(() => {
@@ -350,10 +369,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ content, episodeId, on
         ref={videoRef}
         src={streamSrc}
         playsInline
+        onError={handleVideoError}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onWaiting={() => setIsBuffering(true)}
-        onPlaying={() => setIsBuffering(false)}
+        onPlaying={() => {
+          setIsBuffering(false);
+          setPlaybackError(null);
+        }}
         onClick={togglePlay}
         style={{
           width: '100%',
@@ -363,8 +386,121 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ content, episodeId, on
         }}
       />
 
+      {/* Mobile/TV Video Codec & Container Error Overlay */}
+      {playbackError && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 9995,
+            backgroundColor: 'rgba(0, 0, 0, 0.92)',
+            backdropFilter: 'blur(16px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px'
+          }}
+        >
+          <div
+            style={{
+              maxWidth: '560px',
+              width: '100%',
+              backgroundColor: '#181818',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '12px',
+              padding: '32px',
+              textAlign: 'center',
+              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.95)'
+            }}
+          >
+            <div
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(239, 68, 68, 0.15)',
+                color: '#ef4444',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px auto'
+              }}
+            >
+              <AlertTriangle size={32} />
+            </div>
+
+            <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#ffffff', marginBottom: '8px' }}>
+              Browser Cannot Decode MKV Video
+            </h3>
+
+            <p style={{ fontSize: '14px', color: '#bcbcbc', lineHeight: 1.6, marginBottom: '24px' }}>
+              iPhones, iPads (iOS Safari), and some Smart TV browsers do not have built-in decoders for the <strong>.mkv</strong> container inside web browsers.
+              <br /><br />
+              You can play it immediately with 1-click in <strong>VLC Player</strong>, or download it to play in your device's native video player.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <a
+                href={vlcUrl}
+                className="btn tv-focusable"
+                data-tv-focus="true"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  padding: '12px 20px',
+                  backgroundColor: '#f97316',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  borderRadius: '6px',
+                  textDecoration: 'none'
+                }}
+              >
+                <Tv size={18} />
+                <span>Open in VLC Player (Free)</span>
+              </a>
+
+              <a
+                href={`/api/download-proxy?url=${encodeURIComponent(streamSrc)}&filename=${encodeURIComponent(content.title + '.mkv')}`}
+                download
+                className="btn btn-secondary tv-focusable"
+                data-tv-focus="true"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  padding: '12px 20px',
+                  fontSize: '14px',
+                  borderRadius: '6px',
+                  textDecoration: 'none'
+                }}
+              >
+                <Download size={18} />
+                <span>Download & Play on Device</span>
+              </a>
+
+              <button
+                onClick={onClose}
+                className="btn btn-ghost tv-focusable"
+                data-tv-focus="true"
+                style={{
+                  padding: '10px 20px',
+                  fontSize: '13px',
+                  color: 'var(--text-muted)'
+                }}
+              >
+                Close Player
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Buffering Indicator */}
-      {isBuffering && (
+      {isBuffering && !playbackError && (
         <div
           style={{
             position: 'absolute',
@@ -678,6 +814,27 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ content, episodeId, on
                 </>
               )}
             </button>
+
+            {/* External VLC Player Quick Launcher */}
+            <a
+              href={vlcUrl}
+              className="btn btn-ghost tv-focusable"
+              data-tv-focus="true"
+              title="Play in VLC / External Player"
+              style={{
+                height: '38px',
+                padding: '0 10px',
+                fontSize: '13px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                color: '#f97316',
+                textDecoration: 'none'
+              }}
+            >
+              <ExternalLink size={15} />
+              <span>VLC</span>
+            </a>
 
             {/* Fullscreen Button */}
             <button

@@ -35,6 +35,70 @@ function streamhubBackendPlugin(): Plugin {
         fs.writeFileSync(catalogFile, '[]', 'utf-8');
       }
 
+      // Dedicated Video Streaming Middleware with Byte-Range & Proper MIME support
+      server.middlewares.use((req, res, next) => {
+        if (req.url && (req.url.startsWith('/uploads/') || req.url.startsWith('/api/stream'))) {
+          const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+          const targetFile = urlObj.searchParams.get('file') || path.basename(urlObj.pathname);
+          const safeName = targetFile.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const filePath = path.resolve(uploadsDir, safeName);
+
+          if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+            const stat = fs.statSync(filePath);
+            const fileSize = stat.size;
+            const ext = path.extname(filePath).toLowerCase();
+
+            // Set appropriate MIME type (video/mp4 for mp4 and mkv so mobile/TV decoders recognize H264)
+            let mimeType = 'video/mp4';
+            if (ext === '.webm') mimeType = 'video/webm';
+            else if (ext === '.mov') mimeType = 'video/quicktime';
+            else if (ext === '.mkv') {
+              // video/mp4 lets H.264 decoders attempt playback; raw=1 forces video/x-matroska
+              mimeType = urlObj.searchParams.get('raw') ? 'video/x-matroska' : 'video/mp4';
+            }
+
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type, Accept');
+            res.setHeader('Accept-Ranges', 'bytes');
+            res.setHeader('Cache-Control', 'no-cache');
+
+            const range = req.headers.range;
+            if (range) {
+              const parts = range.replace(/bytes=/, '').split('-');
+              const start = parseInt(parts[0], 10);
+              const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+              if (start >= fileSize || end >= fileSize) {
+                res.statusCode = 416;
+                res.setHeader('Content-Range', `bytes */${fileSize}`);
+                res.end();
+                return;
+              }
+
+              const chunksize = end - start + 1;
+              const fileStream = fs.createReadStream(filePath, { start, end });
+              res.writeHead(206, {
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': chunksize,
+                'Content-Type': mimeType
+              });
+              fileStream.pipe(res);
+              return;
+            } else {
+              res.writeHead(200, {
+                'Content-Length': fileSize,
+                'Content-Type': mimeType,
+                'Accept-Ranges': 'bytes'
+              });
+              fs.createReadStream(filePath).pipe(res);
+              return;
+            }
+          }
+        }
+        next();
+      });
+
       // API: Network Info for TV & Phone Access
       server.middlewares.use('/api/network-info', (_req, res) => {
         const ip = getLocalIp();

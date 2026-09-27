@@ -85,6 +85,14 @@ export const TitleDetailModal: React.FC<TitleDetailModalProps> = ({ item, onClos
 
   const selectedSeason = item.seasons?.find(s => s.seasonNumber === selectedSeasonNumber) || item.seasons?.[0];
 
+  const primaryStreamUrl = (item.type === 'series' && item.seasons?.[0]?.episodes?.[0]?.streamUrl)
+    ? item.seasons[0].episodes[0].streamUrl
+    : item.streamManifestUrl;
+  const fullStreamUrl = typeof window !== 'undefined'
+    ? (primaryStreamUrl.startsWith('http') ? primaryStreamUrl : `${window.location.origin}${primaryStreamUrl}`)
+    : primaryStreamUrl;
+  const vlcUrl = `vlc://${fullStreamUrl.replace(/^https?:\/\//, '')}`;
+
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const hours = Math.floor(mins / 60);
@@ -283,6 +291,32 @@ export const TitleDetailModal: React.FC<TitleDetailModalProps> = ({ item, onClos
                   : item.type === 'series' ? 'Play Episode 1' : 'Play Movie'}
               </span>
             </button>
+
+            {/* Direct Open in VLC for MKV Mobile/TV Playback */}
+            <a
+              href={vlcUrl}
+              className="btn tv-focusable"
+              data-tv-focus="true"
+              title="Open stream in VLC Player (Recommended for MKV on mobile/TV)"
+              style={{
+                padding: '12px 18px',
+                fontSize: '14px',
+                backgroundColor: 'rgba(249, 115, 22, 0.15)',
+                color: '#f97316',
+                borderColor: 'rgba(249, 115, 22, 0.4)',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                textDecoration: 'none',
+                fontWeight: 700
+              }}
+            >
+              <Tv size={16} />
+              <span>Play in VLC</span>
+            </a>
 
             <button
               onClick={() => toggleWatchlist(item.id)}
