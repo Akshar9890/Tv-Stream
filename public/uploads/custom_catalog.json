@@ -1,0 +1,127 @@
+[
+  {
+    "id": "sh-movie-1790506897383",
+    "title": "Hanuman Ansh 2026 HDTC Hindi AAC2 0",
+    "slug": "hanuman-ansh-2026-hdtc-hindi-aac2-0",
+    "type": "movie",
+    "synopsis": "Home media: Hanuman Ansh 2026 HDTC Hindi AAC2 0",
+    "duration": 5400,
+    "releaseYear": 2026,
+    "rating": 8.8,
+    "ageRating": "U/A 13+",
+    "genres": [
+      "Comedy",
+      "Entertainment"
+    ],
+    "cast": [
+      "Home Collection"
+    ],
+    "director": "Personal Upload",
+    "posterUrl": "",
+    "backdropUrl": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=1600&auto=format&fit=crop&q=80",
+    "bucket": "owned",
+    "entitlementTier": "free",
+    "streamManifestUrl": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv",
+    "renditions": [
+      {
+        "quality": "1080p",
+        "resolution": "1920x1080",
+        "bitrate": "5.0 Mbps",
+        "url": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv"
+      },
+      {
+        "quality": "720p",
+        "resolution": "1280x720",
+        "bitrate": "2.5 Mbps",
+        "url": "/uploads/Hanuman.Ansh.2026.1080p.HDTC.Hindi.AAC2.0.x264-1VeGamovies.tw.mkv"
+      }
+    ],
+    "audioTracks": [
+      {
+        "id": "orig",
+        "label": "Original Audio",
+        "language": "en",
+        "isDefault": true
+      }
+    ],
+    "subtitleTracks": [],
+    "status": "published",
+    "viewCount": 0,
+    "createdAt": "2026-09-27T11:01:37.383Z",
+    "updatedAt": "2026-09-27T11:01:37.383Z"
+  },
+  {
+    "id": "sh-upload-1790506117026",
+    "title": "The Great Indian Kapil Show",
+    "slug": "the-great-indian-kapil-show",
+    "type": "series",
+    "synopsis": "Kapil Sharma and his comedy troupe bring unscripted banter, celebrity interviews, and hilarious sketches.",
+    "duration": 3600,
+    "releaseYear": 2026,
+    "rating": 9.4,
+    "ageRating": "U/A 13+",
+    "genres": [
+      "Comedy",
+      "Talk Show"
+    ],
+    "cast": [
+      "Kapil Sharma",
+      "Sunil Grover",
+      "Archana Puran Singh"
+    ],
+    "director": "Kapil Sharma",
+    "posterUrl": "https://images.unsplash.com/photo-1514306191717-452ec28c7814?w=500&auto=format&fit=crop&q=80",
+    "backdropUrl": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=1600&auto=format&fit=crop&q=80",
+    "bucket": "owned",
+    "entitlementTier": "free",
+    "featured": true,
+    "streamManifestUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv",
+    "renditions": [
+      {
+        "quality": "720p",
+        "resolution": "1280x720",
+        "bitrate": "2.5 Mbps",
+        "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv"
+      }
+    ],
+    "audioTracks": [
+      {
+        "id": "hi",
+        "label": "Hindi (Original)",
+        "language": "hi",
+        "isDefault": true
+      }
+    ],
+    "subtitleTracks": [],
+    "seasons": [
+      {
+        "seasonNumber": 5,
+        "title": "Season 5",
+        "episodes": [
+          {
+            "id": "kapil-s5-e1",
+            "seasonNumber": 5,
+            "episodeNumber": 1,
+            "title": "Episode 1: The Grand Season Premiere",
+            "synopsis": "Kapil Sharma, Sunil Grover, and the cast return with celebrity guests and non-stop laughter.",
+            "duration": 3600,
+            "thumbnailUrl": "https://images.unsplash.com/photo-1514306191717-452ec28c7814?w=500&auto=format&fit=crop&q=80",
+            "streamUrl": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv",
+            "renditions": [
+              {
+                "quality": "720p",
+                "resolution": "1280x720",
+                "bitrate": "2.5 Mbps",
+                "url": "/uploads/The_Great_Indian_Kapil_Show_Season_5_Episode_1.720p_-_1vegamovies.tw.mkv"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "published",
+    "viewCount": 1,
+    "createdAt": "2026-09-27T10:48:37.026Z",
+    "updatedAt": "2026-09-27T10:48:37.026Z"
+  }
+]
