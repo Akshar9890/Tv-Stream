@@ -475,9 +475,24 @@ export const UploadRightsModal: React.FC<UploadRightsModalProps> = ({ onClose })
                 Add Video to StreamFlix
               </h2>
             </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '20px' }}>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '16px' }}>
               Upload movie files or append new episodes to an existing series to stream across all devices.
             </p>
+
+            {typeof window !== 'undefined' && window.location.hostname.includes('vercel.app') && (
+              <div style={{ 
+                backgroundColor: 'rgba(234, 179, 8, 0.12)', 
+                border: '1px solid rgba(234, 179, 8, 0.35)', 
+                borderRadius: '8px', 
+                padding: '12px 14px', 
+                marginBottom: '16px', 
+                fontSize: '13px', 
+                color: '#fde047', 
+                lineHeight: 1.5 
+              }}>
+                <strong>⚡ Home Streaming Setup:</strong> You are on Vercel (static hosting). Large movie files (1GB+) stream directly from your laptop server. To stream movies to your mobile phone or TV, connect to your laptop's Wi-Fi network address (see <strong>Connect TV & Phone</strong>) or run <code>npm run tunnel</code>.
+              </div>
+            )}
 
             {/* Mode Selector Tabs: Movie vs TV Show / Episode */}
             <div 
